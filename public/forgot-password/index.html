@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset Password | ElevateX Assets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/coolalertjs@latest/dist/coolalert.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Outfit", "sans-serif"],
+              display: ["Space Grotesk", "sans-serif"],
+            },
+            colors: {
+              primary: "#0ea5e9", // Sky 500
+              secondary: "#3b82f6", // Blue 500
+              dark: "#0f172a", // Slate 900
+              darker: "#020617", // Slate 950
+              accent: "#22d3ee", // Cyan 400
+            },
+            animation: {
+              "fade-in": "fadeIn 0.8s ease-out forwards",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #020617;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+      .glass-panel {
+        background: rgba(2, 6, 23, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .input-field {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .input-field:focus {
+        background: rgba(34, 211, 238, 0.05);
+        border-color: #22d3ee;
+        outline: none;
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+      }
+      .text-gradient {
+        background: linear-gradient(to right, #22d3ee, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center relative">
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2532&auto=format&fit=crop"
+        alt="Background"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#020617]/90 to-[#0f172a]/80"
+      ></div>
+    </div>
+
+    <div
+      class="container mx-auto px-4 py-8 relative z-10 flex items-center justify-center"
+    >
+      <div
+        class="w-full max-w-md glass-panel p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl animate-fade-in relative overflow-hidden"
+      >
+        <!-- Decorative Top Glow -->
+        <div
+          class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"
+        ></div>
+        <div
+          class="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-[50px]"
+        ></div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <a
+            href="/login"
+            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 mb-6 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors text-slate-400"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              ></path>
+            </svg>
+          </a>
+          <h1 class="text-3xl font-display font-bold text-white mb-2">
+            Forgot Password?
+          </h1>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Don't worry! It happens. Please enter the email address associated
+            with your account.
+          </p>
+        </div>
+
+        <!-- Form -->
+        <form id="resetForm" class="space-y-6">
+          <div>
+            <label
+              class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+              >Email Address</label
+            >
+            <div class="relative">
+              <input
+                type="email"
+                id="emailInput"
+                required
+                class="input-field w-full rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-600 focus:ring-0"
+                placeholder="Enter your email"
+              />
+              <div
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-4 rounded-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-[1.02] transition-all duration-300"
+          >
+            Send Reset Link
+          </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 pt-6 border-t border-white/5">
+          <p class="text-slate-400 text-sm">
+            Remember your password?
+            <a
+              href="../login/"
+              class="text-cyan-400 font-bold hover:text-cyan-300 transition-colors"
+              >Log In</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module">
+      import { Ui, apiCall } from "../scripts/utils.js";
+
+      const form = document.getElementById("resetForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("emailInput").value;
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+
+        btn.innerText = "Sending...";
+        btn.disabled = true;
+        btn.classList.add("opacity-75", "cursor-not-allowed");
+
+        // send api request to backend
+        try {
+          const { data, status } = await apiCall(
+            "/api/auth/forgot-password",
+            "POST",
+            { email }
+          );
+
+          if (status === 500) {
+            Ui.alert(
+              "error",
+              "Server Error",
+              data.message || "An unexpected error occurred. Please try again."
+            ).then(() => {
+              btn.innerText = originalText;
+              btn.disabled = false;
+              btn.classList.remove("opacity-75", "cursor-not-allowed");
+            });
+            return;
+          }
+
+          // We show the same message regardless of whether the user exists to prevent email enumeration
+          Ui.alert(
+            "success",
+            "Check your inbox",
+            data.message ||
+              "If an account exists for this email, you will receive a password reset link shortly."
+          ).then(() => {
+            form.reset();
+            btn.innerText = originalText;
+            btn.disabled = false;
+            btn.classList.remove("opacity-75", "cursor-not-allowed");
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>

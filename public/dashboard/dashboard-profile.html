@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile | ElevateX Assets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/coolalertjs@latest/dist/coolalert.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Outfit", "sans-serif"],
+              display: ["Space Grotesk", "sans-serif"],
+            },
+            colors: {
+              primary: "#0ea5e9",
+              secondary: "#3b82f6",
+              dark: "#0f172a",
+              darker: "#020617",
+              accent: "#22d3ee",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #020617;
+        color: #f8fafc;
+      }
+      .glass-panel {
+        background: rgba(2, 6, 23, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .sidebar-link {
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+      }
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background: rgba(255, 255, 255, 0.05);
+        border-left-color: #22d3ee;
+        color: #fff;
+      }
+      .input-field {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+      .input-field:focus {
+        border-color: #22d3ee;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body class="antialiased flex h-screen overflow-hidden">
+    <!-- Mobile Sidebar Overlay -->
+    <div
+      id="sidebarOverlay"
+      class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"
+    ></div>
+
+    <aside
+      id="sidebar"
+      class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#020617] border-r border-white/5 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col"
+    >
+      <div class="h-20 flex items-center px-8 border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="relative w-6 h-6 flex items-end justify-center">
+            <div
+              class="absolute bottom-0 left-0 w-2 h-4 bg-blue-600 transform skew-x-12 rounded-sm"
+            ></div>
+            <div
+              class="absolute bottom-0 right-0 w-2 h-6 bg-cyan-400 transform -skew-x-12 rounded-sm"
+            ></div>
+          </div>
+          <span class="font-display font-bold text-xl text-white"
+            >Elevate<span class="text-cyan-400">X</span></span
+          >
+        </a>
+      </div>
+      <nav class="flex-1 overflow-y-auto py-6 space-y-1">
+        <p
+          class="px-8 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2"
+        >
+          Main
+        </p>
+        <a
+          href="index.html"
+          class="sidebar-link flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+            ></path>
+          </svg>
+          Dashboard
+        </a>
+        <a
+          href="dashboard-deposit.html"
+          class="sidebar-link flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          Fund Wallet
+        </a>
+        <a
+          href="dashboard-withdraw.html"
+          class="sidebar-link flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+          </svg>
+          Withdrawals
+        </a>
+        <a
+          href="dashboard-loan.html"
+          class="sidebar-link flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          Request Loan
+        </a>
+        <p
+          class="px-8 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 mt-8"
+        >
+          Account
+        </p>
+        <a
+          href="dashboard-profile.html"
+          class="sidebar-link active flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            ></path>
+          </svg>
+          Profile
+        </a>
+        <a
+          href="dashboard-security.html"
+          class="sidebar-link flex items-center gap-3 px-8 py-3 text-slate-400"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+            ></path>
+          </svg>
+          Security
+        </a>
+      </nav>
+      <div class="p-6 border-t border-white/5">
+        <div class="flex items-center gap-3">
+          <img
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop"
+            alt="User"
+            class="w-10 h-10 rounded-full border border-white/10"
+          />
+          <div>
+            <h4 class="text-sm font-bold text-white">Jane Doe</h4>
+            <button id="logoutBtn" class="text-xs text-red-400 hover:underline">
+              Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main
+      class="flex-1 flex flex-col h-screen overflow-hidden bg-[#020617] relative"
+    >
+      <header
+        class="h-20 flex items-center justify-between px-6 lg:px-10 border-b border-white/5 bg-[#020617]/80 backdrop-blur-md z-30"
+      >
+        <div class="flex items-center gap-4">
+          <button
+            id="sidebarToggle"
+            class="lg:hidden text-slate-400 hover:text-white"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+          <h1 class="text-xl font-display font-bold text-white">My Profile</h1>
+        </div>
+        <div class="flex items-center gap-6">
+          <button
+            id="notificationBtn"
+            class="relative text-slate-400 hover:text-cyan-400 transition-colors"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="flex-1 overflow-y-auto p-6 lg:p-10">
+        <div class="max-w-4xl mx-auto space-y-8">
+          <!-- Avatar Section -->
+          <div
+            class="glass-panel p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8"
+          >
+            <div class="relative group cursor-pointer">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop"
+                class="w-32 h-32 rounded-full border-4 border-white/10 group-hover:border-cyan-400 transition-colors"
+              />
+              <div
+                class="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="text-center md:text-left">
+              <h2
+                id="userNameDisplay"
+                class="text-2xl font-bold text-white mb-1"
+              ></h2>
+              <p id="userEmailDisplay" class="text-slate-400 mb-4"></p>
+              <div class="flex gap-4 justify-center md:justify-start">
+                <span
+                  class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-bold border border-green-500/20"
+                  >Verified</span
+                >
+                <span
+                  class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20"
+                  >Premium Member</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Details Form -->
+          <div class="glass-panel p-8 rounded-2xl">
+            <h3 class="text-lg font-bold text-white mb-6">
+              Personal Information
+            </h3>
+            <form id="profileForm" class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  id="fullnameInput"
+                  class="input-field w-full rounded-lg px-4 py-3"
+                  value=""
+                />
+              </div>
+
+              <div>
+                <label
+                  class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  id="emailInput"
+                  readonly
+                  class="input-field w-full rounded-lg px-4 py-3 bg-black/20 text-slate-500 cursor-not-allowed"
+                  value=""
+                />
+              </div>
+
+              <div>
+                <label
+                  class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+                  >Phone Number</label
+                >
+                <input
+                  type="tel"
+                  id="phoneInput"
+                  class="input-field w-full rounded-lg px-4 py-3"
+                  value=""
+                />
+              </div>
+
+              <div>
+                <label
+                  class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+                  >Country</label
+                >
+                <select
+                  id="countrySelect"
+                  class="input-field w-full rounded-lg px-4 py-3 bg-[#0f172a]"
+                >
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>United Kingdom</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2">
+                <label
+                  class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2"
+                  >Address</label
+                >
+                <input
+                  type="text"
+                  id="addressInput"
+                  class="input-field w-full rounded-lg px-4 py-3"
+                  value=""
+                />
+              </div>
+
+              <div class="md:col-span-2 flex justify-end mt-4">
+                <button
+                  type="submit"
+                  class="px-8 py-3 rounded-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg hover:shadow-cyan-500/20 transition-all"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      import { Ui, apiCall, isLoggedIn, logout } from "../scripts/utils.js";
+      import "../scripts/dashboard.js"; // For sidebar toggle
+
+      // Sidebar Toggle Logic (copied from dashboard/index.html)
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+
+      if (sidebarToggle && sidebar && overlay) {
+        function toggleSidebar() {
+          sidebar.classList.toggle("-translate-x-full");
+          overlay.classList.toggle("hidden");
+        }
+        sidebarToggle.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", toggleSidebar);
+      }
+
+      // Check login status
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!isLoggedIn()) {
+          window.location.href = "../login/";
+          return;
+        }
+
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            Ui.alert(
+              "question",
+              "Sign Out?",
+              "Are you sure you want to log out of your account?"
+            ).then((result) => {
+              if (result.isConfirmed) {
+                logout();
+              }
+            });
+          });
+        }
+
+        await fetchProfileData();
+      });
+
+      async function fetchProfileData() {
+        const { data: user, status } = await apiCall(
+          "/api/dashboard/profile",
+          "GET"
+        );
+
+        if (status === 200) {
+          document.getElementById("userNameDisplay").textContent =
+            user.fullname;
+          document.getElementById("userEmailDisplay").textContent = user.email;
+          document.getElementById("fullnameInput").value = user.fullname;
+          document.getElementById("emailInput").value = user.email;
+          document.getElementById("phoneInput").value = user.phone;
+          document.getElementById("countrySelect").value = user.country;
+          document.getElementById("addressInput").value = user.address || "";
+        } else if (status === 401) {
+          Ui.alert("error", "Authentication Error", user.message).then(() => {
+            logout();
+          });
+        } else {
+          Ui.alert(
+            "error",
+            "Failed to fetch profile",
+            user.message || "An unknown error occurred."
+          );
+        }
+      }
+
+      document
+        .getElementById("profileForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const fullname = document.getElementById("fullnameInput").value;
+          const phone = document.getElementById("phoneInput").value;
+          const country = document.getElementById("countrySelect").value;
+          const address = document.getElementById("addressInput").value;
+
+          const { data, status } = await apiCall(
+            "/api/dashboard/profile",
+            "PUT",
+            {
+              fullname,
+              phone,
+              country,
+              address,
+            }
+          );
+
+          if (status === 200) {
+            Ui.alert(
+              "success",
+              "Profile Updated",
+              "Your personal information has been updated successfully."
+            );
+            fetchProfileData(); // Re-fetch to update display in case username changed (not applicable here, but good practice)
+          } else if (status === 401) {
+            Ui.alert("error", "Authentication Error", data.message).then(() => {
+              logout();
+            });
+          } else {
+            Ui.alert(
+              "error",
+              "Update Failed",
+              data.message || "An unknown error occurred."
+            );
+          }
+        });
+    </script>
+  </body>
+</html>

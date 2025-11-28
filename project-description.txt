@@ -1,0 +1,219 @@
+i want you to build me an investments website. i will attache the PRD and the logo of the website to this prompt. it will have user and admin dashboards. the admin dashboard is what will be used to control the website: processing withdrawal requests, approving loans, sending customized emails, approving fund wallet requests, editting user wallet balance, viewing user details/data, approving withdrawal requests and any other functionalities u deem necessary. for user dashboard, u will add funtionalities for requesting load, fund wallet through crypto transfer (user will have to upload screen shot of the transfer - which admin will see in dashboard, then approve), request withdrawal, notifications, purchase investment plan, ROI (automatic funding of the profit to wallet on investment maturity), tracking investment progress, etc. Here is the PRD: PRD FOR ELEVATE X
+
+ElevateX Investment Group is a modern wealth-building and digital asset management company focused
+
+on helping individuals and organizations achieve sustainable financial growth through smart,
+
+transparent, and secure investment opportunities.
+
+At ElevateX, our mission is simple — to elevate your financial potential. We combine expert investment
+
+strategies, real-time market analysis, and cutting-edge technology to deliver consistent results. Our
+
+team of experienced traders, analysts, and financial advisors are dedicated to managing risk while
+
+maximizing profitability for every investor.
+
+We believe that financial freedom should be accessible to everyone, regardless of background or
+
+experience. That’s why ElevateX offers flexible investment plans, a user-friendly dashboard, and real-
+
+time earnings tracking. With our transparent approach, secured transactions, and responsive support
+
+team, you can rest assured that your funds are in capable hands.
+
+Join ElevateX today and experience a smarter, safer way to grow your wealth.
+
+PLANS AVAILABLE
+
+INVESTMENT PLAN
+
+Plan Name:-
+
+Investment Range
+
+Duration
+
+ROI (Return on Investment)
+
+Payout Type
+
+Starter Plan
+
+$200 – $999
+
+7 days
+
+10% profit
+
+End of duration
+
+Standard Plan
+
+$1,000 – $4,999
+
+14 days
+
+20% profit
+
+End of duration
+
+Premium Plan
+
+$5,000 – $9,999
+
+21 days
+
+30% profit
+
+End of duration
+
+Elite Plan
+
+$10,000 – $49,999
+
+30 days
+
+45% profit
+
+End of duration
+
+Retirement Plan
+
+$50,000+
+
+45 days
+
+60% profit
+
+User Sign-Up Form (Required Information)
+
+1. Full Name
+
+2. Email Address
+
+3. Phone Number
+
+4. Username
+
+5. Password (with confirmation)
+
+6. Country / State
+
+8. Referral Code (optional)
+
+9. Agreement Checkbox – “I agree to the Terms &amp; Conditions and Privacy Policy”
+
+Accepted Payment Methods:
+
+Bitcoin (BTC) — Wallet:
+
+bc1q3urlm4ahvz3uvhl55698rtqqsnck60x7z93wgq
+
+Ethereum (ETH) — Wallet: 0xC8Ba6A335964B96d9624E599ffabe07211C6aA4d
+
+Litecoin (LTC) — Wallet: ltc1qe69c8fkvsppllq6qln72h4pryz8vk3z5n8pzs2
+
+PAGE CONTENT:
+
+Homepage Introduction
+
+Welcome to ElevateX — Your Partner in Financial Growth
+
+At ElevateX, we believe success is built on smart investments, not luck. Our mission is to empower
+
+investors with secure, transparent, and high-return opportunities in today’s fast-evolving financial
+
+markets. Whether you’re an experienced investor or just starting your journey, ElevateX provides the
+
+tools, expertise, and guidance to help your money work for you.
+
+With cutting-edge technology, professional portfolio management, and 24/7 support, we make wealth
+
+creation simple, reliable, and rewarding.
+
+�� Elevate your potential. Grow with confidence. Invest with ElevateX.
+
+⸻
+
+�� Mission Statement
+
+Our mission at ElevateX is to create financial freedom for individuals and organizations through
+
+sustainable investment solutions that deliver real growth and measurable impact.
+
+We aim to redefine digital investing by combining innovation, transparency, and trust — ensuring that
+
+every investor experiences steady returns and peace of mind.
+
+Our Core Values:
+
+• Integrity: We maintain transparency and honesty in all our dealings.
+
+• Growth: Your success is our mission.
+
+• Security: Your funds and data are protected with industry-standard encryption.
+
+• Innovation: We evolve with the market to give you the best strategies.
+
+• Partnership: We grow with you, not from you.
+
+TERMS AND CONDITIONS/PRIVACY POLICY:
+
+Company Policy &amp; Disclaimer Page
+
+1. Privacy Policy
+
+ElevateX respects your privacy and ensures that all personal data collected during registration is kept
+
+confidential and used solely for account management, security verification, and transaction processing.
+
+We never share, sell, or disclose your information to third parties.
+
+⸻
+
+2. Anti-Fraud Policy
+
+Any fraudulent activities, including false identities, chargebacks, or misuse of the platform, will result in
+
+immediate account suspension and potential legal action.
+
+⸻
+
+3. Investment Disclaimer
+
+Investing involves risks. Although ElevateX employs experienced traders and risk management systems,
+
+we cannot guarantee profits under all market conditions. Investors are advised to only invest funds they
+
+can afford to set aside for the plan duration.
+
+⸻
+
+4. Terms of Use
+
+By registering and investing on ElevateX, users agree to comply with all our terms, policies, and
+
+procedures. Users are responsible for maintaining their account security and ensuring accurate wallet
+
+information.
+
+⸻
+
+5. Compliance
+
+ElevateX operates under international digital asset guidelines and follows strict Know-Your-Customer
+
+(KYC) and Anti-Money Laundering (AML) standards to ensure a safe investment environment for all
+
+users.
+
+⸻
+
+6. Limitation of Liability
+
+ElevateX shall not be held responsible for losses resulting from user negligence, market volatility, third-
+
+party interference, or technical issues beyond our control. Our role is to manage investments
+
+professionally and transparently, not to eliminate all investment risks.
