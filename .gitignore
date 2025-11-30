@@ -31,3 +31,6 @@ public/uploads/
 *.iml           # WebStorm/IntelliJ
 .DS_Store       # macOS
 Thumbs.db       # Windows
+
+seminar-formal.docx
+seminar.docx

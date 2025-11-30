@@ -8,7 +8,7 @@ const loanRoutes = require("./routes/loan.routes");
 const adminRoutes = require("./routes/admin.routes");
 const notificationRoutes = require("./routes/notification.routes");
 const investmentRoutes = require("./routes/investment.routes.js");
-require("./cron-jobs.js");
+// require("./cron-jobs.js");
 const Database = require("./loaders/database");
 
 const app = express();
