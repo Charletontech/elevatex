@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const serverless = require("serverless-http");
 const models = require("./models");
 const authRoutes = require("./routes/auth.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
@@ -12,7 +13,6 @@ const investmentRoutes = require("./routes/investment.routes.js");
 const Database = require("./loaders/database");
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -45,7 +45,5 @@ Database.connect();
 // synchronize database
 Database.sync();
 
-// start running server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+module.exports.handler = serverless(app);
+

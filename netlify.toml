@@ -1,0 +1,14 @@
+[build]
+  command = "npm install"
+  functions = "functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/index"
+  status = 200
+
+[functions]
+  included_files = ["./cron-jobs.js", "./scripts/process_investments.js", "./config/database.js", "./config/config.js", "./models/**", "./loaders/database.js"]
+
+[functions."cron-jobs"]
+  schedule = "0 * * * *"
