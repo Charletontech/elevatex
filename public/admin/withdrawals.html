@@ -11,6 +11,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -208,7 +213,7 @@
       </header>
 
       <div class="flex-1 overflow-y-auto p-10">
-        <div class="glass-panel rounded-2xl overflow-hidden">
+        <div class="glass-panel rounded-2xl overflow-y-auto">
           <table class="w-full text-left">
             <thead
               class="bg-white/5 text-slate-400 text-xs uppercase tracking-wider"
@@ -221,7 +226,10 @@
                 <th class="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="withdrawalsTableBody" class="text-sm text-slate-300 divide-y divide-white/5">
+            <tbody
+              id="withdrawalsTableBody"
+              class="text-sm text-slate-300 divide-y divide-white/5"
+            >
               <!-- Withdrawal requests will be injected here -->
             </tbody>
           </table>
@@ -247,9 +255,9 @@
       }
 
       // Check login status and admin role
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         if (!isLoggedIn()) {
-          window.location.href = '../login/';
+          window.location.href = "../login/";
           return;
         }
 
@@ -273,40 +281,64 @@
       });
 
       async function fetchWithdrawals() {
-        const { data: transactions, status } = await apiCall('/api/transactions', 'GET');
+        const { data: transactions, status } = await apiCall(
+          "/api/transactions",
+          "GET"
+        );
         if (status === 200) {
-          const withdrawals = transactions.filter(tx => tx.type === 'withdrawal');
-          const withdrawalsTableBody = document.getElementById('withdrawalsTableBody');
-          withdrawalsTableBody.innerHTML = '';
+          const withdrawals = transactions.filter(
+            (tx) => tx.type === "withdrawal"
+          );
+          const withdrawalsTableBody = document.getElementById(
+            "withdrawalsTableBody"
+          );
+          withdrawalsTableBody.innerHTML = "";
 
           for (const withdrawal of withdrawals) {
-            const { data: user, status: userStatus } = await apiCall(`/api/admin/users/${withdrawal.userId}`); // Fetch user details
+            const { data: user, status: userStatus } = await apiCall(
+              `/api/admin/users/${withdrawal.userId}`
+            ); // Fetch user details
             if (userStatus !== 200) {
-              console.error(`Failed to fetch user for withdrawal ID: ${withdrawal.id}`);
+              console.error(
+                `Failed to fetch user for withdrawal ID: ${withdrawal.id}`
+              );
               continue;
             }
 
             const row = `
               <tr>
                 <td class="p-4 font-bold text-white">${user.fullname}</td>
-                <td class="p-4 text-lg font-bold text-white">$${withdrawal.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td class="p-4 text-lg font-bold text-white">$${withdrawal.amount.toLocaleString(
+                  undefined,
+                  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                )}</td>
                 <td class="p-4 text-xs text-slate-400">
-                  <div>${withdrawal.paymentMethod || 'N/A'}</div>
-                  <div>Addr: ${withdrawal.walletAddress || 'N/A'}</div>
+                  <div>${withdrawal.paymentMethod || "N/A"}</div>
+                  <div>Addr: ${withdrawal.walletAddress || "N/A"}</div>
                 </td>
                 <td class="p-4">
-                  <span class="px-2 py-1 rounded text-xs ${withdrawal.status === 'approved' ? 'bg-green-500/10 text-green-400' : withdrawal.status === 'pending' ? 'bg-yellow-500/10 text-yellow-400' : 'bg-red-500/10 text-red-400'}">
+                  <span class="px-2 py-1 rounded text-xs ${
+                    withdrawal.status === "approved"
+                      ? "bg-green-500/10 text-green-400"
+                      : withdrawal.status === "pending"
+                      ? "bg-yellow-500/10 text-yellow-400"
+                      : "bg-red-500/10 text-red-400"
+                  }">
                     ${withdrawal.status}
                   </span>
                 </td>
                 <td class="p-4 text-right space-x-2">
-                  ${withdrawal.status === 'pending' ? `
+                  ${
+                    withdrawal.status === "pending"
+                      ? `
                     <button data-id="${withdrawal.id}" class="approve-btn px-3 py-1 rounded bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white font-bold transition">
                       Paid
                     </button>
                     <button data-id="${withdrawal.id}" class="decline-btn px-3 py-1 rounded bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white font-bold transition">
                       Decline
-                    </button>` : ''}
+                    </button>`
+                      : ""
+                  }
                 </td>
               </tr>
             `;
@@ -314,30 +346,43 @@
           }
           attachEventListeners();
         } else if (status === 401 || status === 403) {
-          Ui.alert('error', 'Authentication Error', transactions.message).then(() => {
-            logout();
-          });
+          Ui.alert("error", "Authentication Error", transactions.message).then(
+            () => {
+              logout();
+            }
+          );
         } else {
-          Ui.alert('error', 'Failed to fetch withdrawals', transactions.message || 'An unknown error occurred.');
+          Ui.alert(
+            "error",
+            "Failed to fetch withdrawals",
+            transactions.message || "An unknown error occurred."
+          );
         }
       }
 
       function attachEventListeners() {
         document.querySelectorAll(".approve-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
-            const transactionId = btn.getAttribute('data-id');
+            const transactionId = btn.getAttribute("data-id");
             Ui.alert(
               "question",
               "Mark as Paid?",
               "Confirm that you have sent the funds."
             ).then(async (res) => {
               if (res.isConfirmed) {
-                const { data, status } = await apiCall(`/api/admin/withdrawals/approve/${transactionId}`, 'PUT');
+                const { data, status } = await apiCall(
+                  `/api/admin/withdrawals/approve/${transactionId}`,
+                  "PUT"
+                );
                 if (status === 200) {
                   Ui.toast("success", "Withdrawal Approved & Processed");
                   fetchWithdrawals(); // Re-fetch to update UI
                 } else {
-                  Ui.alert("error", "Approval Failed", data.message || 'An error occurred.');
+                  Ui.alert(
+                    "error",
+                    "Approval Failed",
+                    data.message || "An error occurred."
+                  );
                 }
               }
             });
@@ -346,19 +391,26 @@
 
         document.querySelectorAll(".decline-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
-            const transactionId = btn.getAttribute('data-id');
+            const transactionId = btn.getAttribute("data-id");
             Ui.alert(
               "warning",
               "Decline Withdrawal?",
               "The user will be notified."
             ).then(async (res) => {
               if (res.isConfirmed) {
-                const { data, status } = await apiCall(`/api/admin/withdrawals/decline/${transactionId}`, 'PUT');
+                const { data, status } = await apiCall(
+                  `/api/admin/withdrawals/decline/${transactionId}`,
+                  "PUT"
+                );
                 if (status === 200) {
                   Ui.toast("info", "Withdrawal Declined");
                   fetchWithdrawals(); // Re-fetch to update UI
                 } else {
-                  Ui.alert("error", "Decline Failed", data.message || 'An error occurred.');
+                  Ui.alert(
+                    "error",
+                    "Decline Failed",
+                    data.message || "An error occurred."
+                  );
                 }
               }
             });
@@ -366,3 +418,5 @@
         });
       }
     </script>
+  </body>
+</html>

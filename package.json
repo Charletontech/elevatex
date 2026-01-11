@@ -26,8 +26,7 @@
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.10",
     "sendpulse-api": "^1.1.7",
-    "sequelize": "^6.37.7",
-    "serverless-http": "^3.2.0"
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

@@ -13,6 +13,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -32,6 +37,20 @@
         },
       };
     </script>
+
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = 'cef05a66463a9742df2a67e7b466ee12fd472abe';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+
     <style>
       body {
         background-color: #020617;
@@ -86,14 +105,7 @@
       <!-- Logo -->
       <div class="h-20 flex items-center px-8 border-b border-white/5">
         <a href="index.html" class="flex items-center gap-2">
-          <div class="relative w-6 h-6 flex items-end justify-center">
-            <div
-              class="absolute bottom-0 left-0 w-2 h-4 bg-blue-600 transform skew-x-12 rounded-sm"
-            ></div>
-            <div
-              class="absolute bottom-0 right-0 w-2 h-6 bg-cyan-400 transform -skew-x-12 rounded-sm"
-            ></div>
-          </div>
+          <img src="../assets/logo.svg" alt="ElevateX logo" class="w-6 h-6" />
           <span class="font-display font-bold text-xl text-white"
             >Elevate<span class="text-cyan-400">X</span></span
           >
@@ -342,11 +354,9 @@
             <p
               class="text-slate-400 text-sm font-medium uppercase tracking-wider mb-1"
             >
-              Total Balance
+              Wallet Balance
             </p>
-            <h3 class="text-3xl font-display font-bold text-white mb-2">
-              $24,800.50
-            </h3>
+            <h3 class="text-3xl font-display font-bold text-white mb-2">$0</h3>
             <div class="flex items-center text-green-400 text-sm font-bold">
               <svg
                 class="w-4 h-4 mr-1"
@@ -361,7 +371,7 @@
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 ></path>
               </svg>
-              +2.4%
+              +0.1%
               <span class="text-slate-500 font-normal ml-2">vs last week</span>
             </div>
           </div>
@@ -378,9 +388,7 @@
             >
               Total Profit
             </p>
-            <h3 class="text-3xl font-display font-bold text-white mb-2">
-              $3,250.00
-            </h3>
+            <h3 class="text-3xl font-display font-bold text-white mb-2">$0</h3>
             <div class="flex items-center text-green-400 text-sm font-bold">
               <svg
                 class="w-4 h-4 mr-1"
@@ -395,7 +403,7 @@
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 ></path>
               </svg>
-              +12.5%
+              +0.2%
               <span class="text-slate-500 font-normal ml-2">Total ROI</span>
             </div>
           </div>
@@ -507,7 +515,7 @@
                 </tr>
               </thead>
               <tbody class="text-sm text-slate-300 divide-y divide-white/5">
-                <tr>
+                <!-- <tr>
                   <td class="p-4 font-medium text-white">Starter Plan</td>
                   <td class="p-4">$500.00</td>
                   <td class="p-4">Sep 15, 2024</td>
@@ -530,7 +538,7 @@
                     >
                   </td>
                   <td class="p-4 text-right text-green-400">+$400.00</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>

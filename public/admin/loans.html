@@ -10,6 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -207,7 +212,7 @@
       </header>
 
       <div class="flex-1 overflow-y-auto p-10">
-        <div class="glass-panel rounded-2xl overflow-hidden">
+        <div class="glass-panel rounded-2xl overflow-y-auto">
           <table class="w-full text-left">
             <thead
               class="bg-white/5 text-slate-400 text-xs uppercase tracking-wider"
@@ -220,7 +225,10 @@
                 <th class="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="loansTableBody" class="text-sm text-slate-300 divide-y divide-white/5">
+            <tbody
+              id="loansTableBody"
+              class="text-sm text-slate-300 divide-y divide-white/5"
+            >
               <!-- Loan requests will be injected here -->
             </tbody>
           </table>
@@ -245,9 +253,9 @@
       }
 
       // Check login status and admin role
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         if (!isLoggedIn()) {
-          window.location.href = '../login/';
+          window.location.href = "../login/";
           return;
         }
 
@@ -271,32 +279,48 @@
       });
 
       async function fetchLoans() {
-        const { data: loans, status } = await apiCall('/api/admin/loans', 'GET'); 
+        const { data: loans, status } = await apiCall(
+          "/api/admin/loans",
+          "GET"
+        );
         if (status === 200) {
-          const loansTableBody = document.getElementById('loansTableBody');
-          loansTableBody.innerHTML = '';
+          const loansTableBody = document.getElementById("loansTableBody");
+          loansTableBody.innerHTML = "";
 
           for (const loan of loans) {
             const row = `
               <tr>
                 <td class="p-4 font-bold text-white">${loan.User.fullname}</td>
-                <td class="p-4 text-lg font-bold text-white">$${loan.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td class="p-4 text-lg font-bold text-white">$${loan.amount.toLocaleString(
+                  undefined,
+                  { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                )}</td>
                 <td class="p-4 text-xs text-slate-400 max-w-xs truncate">
                   ${loan.reason}
                 </td>
                 <td class="p-4">
-                  <span class="px-2 py-1 rounded text-xs ${loan.status === 'approved' ? 'bg-green-500/10 text-green-400' : loan.status === 'pending' ? 'bg-yellow-500/10 text-yellow-400' : 'bg-red-500/10 text-red-400'}">
+                  <span class="px-2 py-1 rounded text-xs ${
+                    loan.status === "approved"
+                      ? "bg-green-500/10 text-green-400"
+                      : loan.status === "pending"
+                      ? "bg-yellow-500/10 text-yellow-400"
+                      : "bg-red-500/10 text-red-400"
+                  }">
                     ${loan.status}
                   </span>
                 </td>
                 <td class="p-4 text-right space-x-2">
-                  ${loan.status === 'pending' ? `
+                  ${
+                    loan.status === "pending"
+                      ? `
                     <button data-id="${loan.id}" class="approve-btn px-3 py-1 rounded bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white font-bold transition">
                       Grant
                     </button>
                     <button data-id="${loan.id}" class="decline-btn px-3 py-1 rounded bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white font-bold transition">
                       Deny
-                    </button>` : ''}
+                    </button>`
+                      : ""
+                  }
                 </td>
               </tr>
             `;
@@ -304,30 +328,41 @@
           }
           attachEventListeners();
         } else if (status === 401 || status === 403) {
-          Ui.alert('error', 'Authentication Error', loans.message).then(() => {
+          Ui.alert("error", "Authentication Error", loans.message).then(() => {
             logout();
           });
         } else {
-          Ui.alert('error', 'Failed to fetch loans', loans.message || 'An unknown error occurred.');
+          Ui.alert(
+            "error",
+            "Failed to fetch loans",
+            loans.message || "An unknown error occurred."
+          );
         }
       }
 
       function attachEventListeners() {
         document.querySelectorAll(".approve-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
-            const loanId = btn.getAttribute('data-id');
+            const loanId = btn.getAttribute("data-id");
             Ui.alert(
               "question",
               "Grant Loan?",
               "This will credit the user's account with the loan amount."
             ).then(async (res) => {
               if (res.isConfirmed) {
-                const { data, status } = await apiCall(`/api/admin/loans/approve/${loanId}`, 'PUT');
+                const { data, status } = await apiCall(
+                  `/api/admin/loans/approve/${loanId}`,
+                  "PUT"
+                );
                 if (status === 200) {
                   Ui.toast("success", "Loan Approved & Credited");
                   fetchLoans(); // Re-fetch to update UI
                 } else {
-                  Ui.alert("error", "Approval Failed", data.message || 'An error occurred.');
+                  Ui.alert(
+                    "error",
+                    "Approval Failed",
+                    data.message || "An error occurred."
+                  );
                 }
               }
             });
@@ -336,19 +371,26 @@
 
         document.querySelectorAll(".decline-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
-            const loanId = btn.getAttribute('data-id');
+            const loanId = btn.getAttribute("data-id");
             Ui.alert(
               "warning",
               "Deny Loan?",
               "The user will be notified."
             ).then(async (res) => {
               if (res.isConfirmed) {
-                const { data, status } = await apiCall(`/api/admin/loans/decline/${loanId}`, 'PUT');
+                const { data, status } = await apiCall(
+                  `/api/admin/loans/decline/${loanId}`,
+                  "PUT"
+                );
                 if (status === 200) {
                   Ui.toast("info", "Loan Denied");
                   fetchLoans(); // Re-fetch to update UI
                 } else {
-                  Ui.alert("error", "Denial Failed", data.message || 'An error occurred.');
+                  Ui.alert(
+                    "error",
+                    "Denial Failed",
+                    data.message || "An error occurred."
+                  );
                 }
               }
             });
@@ -356,3 +398,5 @@
         });
       }
     </script>
+  </body>
+</html>

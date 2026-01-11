@@ -49,6 +49,10 @@ const User = sequelize.define('User', {
     type: DataTypes.FLOAT,
     defaultValue: 0,
   },
+  profits: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0,
+  },
   address: {
     type: DataTypes.STRING,
     allowNull: true,

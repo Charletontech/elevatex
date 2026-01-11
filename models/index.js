@@ -5,7 +5,7 @@ const Loan = require('./loan.model');
 const Notification = require('./notification.model');
 
 User.hasMany(Investment, { foreignKey: 'userId' });
-Investment.belongsTo(User, { foreignKey: 'userId' });
+Investment.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 User.hasMany(Transaction, { foreignKey: 'userId' });
 Transaction.belongsTo(User, { foreignKey: 'userId' });

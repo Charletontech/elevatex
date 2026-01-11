@@ -12,6 +12,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -269,7 +274,9 @@
                 <span class="text-sm font-bold text-slate-400 uppercase"
                   >Wallet Balance</span
                 >
-                <span id="userBalanceDisplay" class="text-2xl font-display font-bold text-white"
+                <span
+                  id="userBalanceDisplay"
+                  class="text-2xl font-display font-bold text-white"
                   >$0.00</span
                 >
               </div>
@@ -434,9 +441,9 @@
       }
 
       // Check login status and admin role
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         if (!isLoggedIn()) {
-          window.location.href = '../login/';
+          window.location.href = "../login/";
           return;
         }
 
@@ -457,11 +464,11 @@
         }
 
         const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('id');
+        const userId = urlParams.get("id");
 
         if (!userId) {
-          Ui.alert('error', 'Error', 'User ID not found in URL.').then(() => {
-            window.location.href = 'users.html';
+          Ui.alert("error", "Error", "User ID not found in URL.").then(() => {
+            window.location.href = "users.html";
           });
           return;
         }
@@ -470,102 +477,167 @@
       });
 
       async function fetchUserDetails(userId) {
-        const { data: user, status } = await apiCall(`/api/admin/users/${userId}`, 'GET');
+        const { data: user, status } = await apiCall(
+          `/api/admin/users/${userId}`,
+          "GET"
+        );
 
         if (status === 200) {
-          document.getElementById('userNameHeader').textContent = user.fullname;
-          document.getElementById('userNameDisplay').textContent = user.fullname;
-          document.getElementById('userEmailDisplay').textContent = user.email;
-          document.getElementById('userBalanceDisplay').textContent = `$${user.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-          
-          document.getElementById('usernameInput').value = user.username;
-          document.getElementById('phoneInput').value = user.phone;
-          document.getElementById('countryInput').value = user.country;
+          document.getElementById("userNameHeader").textContent = user.fullname;
+          document.getElementById("userNameDisplay").textContent =
+            user.fullname;
+          document.getElementById("userEmailDisplay").textContent = user.email;
+          document.getElementById(
+            "userBalanceDisplay"
+          ).textContent = `$${user.balance.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`;
+
+          document.getElementById("usernameInput").value = user.username;
+          document.getElementById("phoneInput").value = user.phone;
+          document.getElementById("countryInput").value = user.country;
 
           // Update toggles (placeholders for now, assuming these properties exist on user object)
-          document.getElementById('kycVerifiedToggle').checked = user.kycVerified || false;
-          document.getElementById('premiumStatusToggle').checked = user.isPremium || false;
-          document.getElementById('canWithdrawToggle').checked = user.canWithdraw || true; // Assuming true by default
-        
-          attachBalanceEventListeners(userId);
+          document.getElementById("kycVerifiedToggle").checked =
+            user.kycVerified || false;
+          document.getElementById("premiumStatusToggle").checked =
+            user.isPremium || false;
+          document.getElementById("canWithdrawToggle").checked =
+            user.canWithdraw || true; // Assuming true by default
 
+          attachBalanceEventListeners(userId);
         } else if (status === 401 || status === 403) {
-          Ui.alert('error', 'Authentication Error', user.message).then(() => {
+          Ui.alert("error", "Authentication Error", user.message).then(() => {
             logout();
           });
         } else {
-          Ui.alert('error', 'Failed to fetch user details', user.message || 'An unknown error occurred.').then(() => {
-            window.location.href = 'users.html';
+          Ui.alert(
+            "error",
+            "Failed to fetch user details",
+            user.message || "An unknown error occurred."
+          ).then(() => {
+            window.location.href = "users.html";
           });
         }
       }
 
       function attachBalanceEventListeners(userId) {
-        document.getElementById("addBalance").addEventListener("click", async () => {
-          const balanceAmountInput = document.getElementById("balanceAmount");
-          const amount = parseFloat(balanceAmountInput.value);
-          if (isNaN(amount) || amount <= 0) {
-            Ui.alert('warning', 'Invalid Amount', 'Please enter a positive number.');
-            return;
-          }
-
-          const { data: user, status: userStatus } = await apiCall(`/api/admin/users/${userId}`, 'GET');
-          if (userStatus !== 200) {
-            Ui.alert('error', 'Error', 'Could not fetch current balance.').then(() => fetchUserDetails(userId));
-            return;
-          }
-          const newBalance = user.balance + amount;
-
-          Ui.alert(
-            "question",
-            "Confirm Credit",
-            `Are you sure you want to CREDIT $${amount.toLocaleString()} to this user? New balance will be $${newBalance.toLocaleString()}.`
-          ).then(async (result) => {
-            if (result.isConfirmed) {
-              const { data, status } = await apiCall(`/api/admin/users/${userId}/balance`, 'PUT', { amount: newBalance });
-              if (status === 200) {
-                Ui.toast("success", "Balance Updated", `$${amount.toLocaleString()} credited.`);
-                balanceAmountInput.value = ''; // Clear input
-                fetchUserDetails(userId); // Re-fetch to update UI
-              } else {
-                Ui.alert("error", "Update Failed", data.message || 'An error occurred.');
-              }
+        document
+          .getElementById("addBalance")
+          .addEventListener("click", async () => {
+            const balanceAmountInput = document.getElementById("balanceAmount");
+            const amount = parseFloat(balanceAmountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+              Ui.alert(
+                "warning",
+                "Invalid Amount",
+                "Please enter a positive number."
+              );
+              return;
             }
-          });
-        });
 
-        document.getElementById("subBalance").addEventListener("click", async () => {
-          const balanceAmountInput = document.getElementById("balanceAmount");
-          const amount = parseFloat(balanceAmountInput.value);
-          if (isNaN(amount) || amount <= 0) {
-            Ui.alert('warning', 'Invalid Amount', 'Please enter a positive number.');
-            return;
-          }
-
-          const { data: user, status: userStatus } = await apiCall(`/api/admin/users/${userId}`, 'GET');
-          if (userStatus !== 200) {
-            Ui.alert('error', 'Error', 'Could not fetch current balance.').then(() => fetchUserDetails(userId));
-            return;
-          }
-          const newBalance = user.balance - amount;
-
-          Ui.alert(
-            "question",
-            "Confirm Debit",
-            `Are you sure you want to DEBIT $${amount.toLocaleString()} from this user? New balance will be $${newBalance.toLocaleString()}.`
-          ).then(async (result) => {
-            if (result.isConfirmed) {
-              const { data, status } = await apiCall(`/api/admin/users/${userId}/balance`, 'PUT', { amount: newBalance });
-              if (status === 200) {
-                Ui.toast("warning", "Balance Updated", `$${amount.toLocaleString()} debited.`);
-                balanceAmountInput.value = ''; // Clear input
-                fetchUserDetails(userId); // Re-fetch to update UI
-              } else {
-                Ui.alert("error", "Update Failed", data.message || 'An error occurred.');
-              }
+            const { data: user, status: userStatus } = await apiCall(
+              `/api/admin/users/${userId}`,
+              "GET"
+            );
+            if (userStatus !== 200) {
+              Ui.alert(
+                "error",
+                "Error",
+                "Could not fetch current balance."
+              ).then(() => fetchUserDetails(userId));
+              return;
             }
+            const newBalance = user.balance + amount;
+
+            Ui.alert(
+              "question",
+              "Confirm Credit",
+              `Are you sure you want to CREDIT $${amount.toLocaleString()} to this user? New balance will be $${newBalance.toLocaleString()}.`
+            ).then(async (result) => {
+              if (result.isConfirmed) {
+                const { data, status } = await apiCall(
+                  `/api/admin/users/${userId}/balance`,
+                  "PUT",
+                  { amount: newBalance }
+                );
+                if (status === 200) {
+                  Ui.toast(
+                    "success",
+                    "Balance Updated",
+                    `$${amount.toLocaleString()} credited.`
+                  );
+                  balanceAmountInput.value = ""; // Clear input
+                  fetchUserDetails(userId); // Re-fetch to update UI
+                } else {
+                  Ui.alert(
+                    "error",
+                    "Update Failed",
+                    data.message || "An error occurred."
+                  );
+                }
+              }
+            });
           });
-        });
+
+        document
+          .getElementById("subBalance")
+          .addEventListener("click", async () => {
+            const balanceAmountInput = document.getElementById("balanceAmount");
+            const amount = parseFloat(balanceAmountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+              Ui.alert(
+                "warning",
+                "Invalid Amount",
+                "Please enter a positive number."
+              );
+              return;
+            }
+
+            const { data: user, status: userStatus } = await apiCall(
+              `/api/admin/users/${userId}`,
+              "GET"
+            );
+            if (userStatus !== 200) {
+              Ui.alert(
+                "error",
+                "Error",
+                "Could not fetch current balance."
+              ).then(() => fetchUserDetails(userId));
+              return;
+            }
+            const newBalance = user.balance - amount;
+
+            Ui.alert(
+              "question",
+              "Confirm Debit",
+              `Are you sure you want to DEBIT $${amount.toLocaleString()} from this user? New balance will be $${newBalance.toLocaleString()}.`
+            ).then(async (result) => {
+              if (result.isConfirmed) {
+                const { data, status } = await apiCall(
+                  `/api/admin/users/${userId}/balance`,
+                  "PUT",
+                  { amount: newBalance }
+                );
+                if (status === 200) {
+                  Ui.toast(
+                    "warning",
+                    "Balance Updated",
+                    `$${amount.toLocaleString()} debited.`
+                  );
+                  balanceAmountInput.value = ""; // Clear input
+                  fetchUserDetails(userId); // Re-fetch to update UI
+                } else {
+                  Ui.alert(
+                    "error",
+                    "Update Failed",
+                    data.message || "An error occurred."
+                  );
+                }
+              }
+            });
+          });
       }
     </script>
   </body>

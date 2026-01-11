@@ -7,6 +7,11 @@ const Investment = sequelize.define("Investment", {
     autoIncrement: true,
     primaryKey: true,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: { model: "Users", key: "id" },
+  },
   planName: {
     type: DataTypes.STRING,
     allowNull: false,

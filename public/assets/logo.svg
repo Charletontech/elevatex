@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48" role="img" aria-labelledby="elevatexLogoTitle">
+  <title id="elevatexLogoTitle">ElevateX logo</title>
+  <defs>
+    <linearGradient id="gCyan" x1="0" x2="1">
+      <stop offset="0" stop-color="#06b6d4" />
+      <stop offset="1" stop-color="#22d3ee" />
+    </linearGradient>
+    <linearGradient id="gBlue" x1="0" x2="1">
+      <stop offset="0" stop-color="#2545ff" />
+      <stop offset="1" stop-color="#0f3bff" />
+    </linearGradient>
+    <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#22d3ee" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Right, taller bar (cyan gradient) -->
+  <g transform="translate(0,0)" filter="url(#fGlow)">
+    <rect x="32" y="6" width="18" height="44" rx="3" fill="url(#gCyan)" transform="rotate(8 41 28)" />
+  </g>
+
+  <!-- Left, smaller bar (blue) -->
+  <rect x="10" y="20" width="12" height="30" rx="3" fill="url(#gBlue)" transform="rotate(-6 16 35)" />
+</svg>

@@ -32,6 +32,7 @@ public/uploads/
 .DS_Store       # macOS
 Thumbs.db       # Windows
 
+
 seminar-formal.docx
 seminar.docx
 test-db.js

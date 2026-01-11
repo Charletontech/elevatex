@@ -12,6 +12,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -310,7 +315,7 @@
               </h3>
               <p class="text-slate-400 text-sm mb-4">
                 Your current portfolio performance makes you eligible for loans
-                up to <span class="text-white font-bold">$12,000</span>.
+                up to <span class="text-white font-bold">$0</span>.
               </p>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div class="bg-cyan-400 h-2" style="width: 80%"></div>
@@ -326,7 +331,10 @@
                 Application History
               </h3>
               <table class="w-full text-left">
-                <tbody id="loanHistoryBody" class="text-sm text-slate-300 divide-y divide-white/5">
+                <tbody
+                  id="loanHistoryBody"
+                  class="text-sm text-slate-300 divide-y divide-white/5"
+                >
                   <!-- Loan history will be injected here -->
                 </tbody>
               </table>
@@ -340,90 +348,99 @@
       import { Ui, apiCall, isLoggedIn, logout } from "../scripts/utils.js";
       import "../scripts/dashboard.js";
 
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         if (!isLoggedIn()) {
-          window.location.href = '../login/';
+          window.location.href = "../login/";
           return;
         }
         await fetchLoanHistory();
       });
 
-      document.getElementById("loanForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        const amount = document.getElementById('amount').value;
-        const duration = document.getElementById('duration').value;
-        const reason = document.getElementById('reason').value;
+      document
+        .getElementById("loanForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-        if (!amount || !duration || !reason) {
-          Ui.alert('error', 'Missing Fields', 'Please fill out all fields.');
-          return;
-        }
+          const amount = document.getElementById("amount").value;
+          const duration = document.getElementById("duration").value;
+          const reason = document.getElementById("reason").value;
 
-        const { data, status } = await apiCall('/api/loan', 'POST', {
-          amount,
-          duration,
-          reason,
-        });
-
-        if (status === 201) {
-          Ui.alert(
-            "success",
-            "Application Received",
-            "Your loan application has been submitted for review. You will be notified of the decision within 24 hours."
-          ).then(() => {
-            fetchLoanHistory(); // Refresh history
-          });
-          e.target.reset();
-        } else {
-          Ui.alert("error", "Loan Application Failed", data.message);
-        }
-      });
-
-      async function fetchLoanHistory() {
-        const historyBody = document.getElementById('loanHistoryBody');
-        historyBody.innerHTML = '<tr><td colspan="2" class="py-3 text-center text-slate-500">Loading history...</td></tr>';
-
-        const { data: loans, status } = await apiCall('/api/loans/history');
-
-        if (status === 200) {
-          historyBody.innerHTML = '';
-          if (loans.length === 0) {
-            historyBody.innerHTML = '<tr><td colspan="2" class="py-3 text-center text-slate-500">No loan history found.</td></tr>';
+          if (!amount || !duration || !reason) {
+            Ui.alert("error", "Missing Fields", "Please fill out all fields.");
             return;
           }
 
-          loans.forEach(loan => {
-            let statusClass = '';
+          const { data, status } = await apiCall("/api/loan", "POST", {
+            amount,
+            duration,
+            reason,
+          });
+
+          if (status === 201) {
+            Ui.alert(
+              "success",
+              "Application Received",
+              "Your loan application has been submitted for review. You will be notified of the decision within 24 hours."
+            ).then(() => {
+              fetchLoanHistory(); // Refresh history
+            });
+            e.target.reset();
+          } else {
+            Ui.alert("error", "Loan Application Failed", data.message);
+          }
+        });
+
+      async function fetchLoanHistory() {
+        const historyBody = document.getElementById("loanHistoryBody");
+        historyBody.innerHTML =
+          '<tr><td colspan="2" class="py-3 text-center text-slate-500">Loading history...</td></tr>';
+
+        const { data: loans, status } = await apiCall("/api/loans/history");
+
+        if (status === 200) {
+          historyBody.innerHTML = "";
+          if (loans.length === 0) {
+            historyBody.innerHTML =
+              '<tr><td colspan="2" class="py-3 text-center text-slate-500">No loan history found.</td></tr>';
+            return;
+          }
+
+          loans.forEach((loan) => {
+            let statusClass = "";
             switch (loan.status) {
-              case 'approved':
-                statusClass = 'bg-green-500/10 text-green-400';
+              case "approved":
+                statusClass = "bg-green-500/10 text-green-400";
                 break;
-              case 'pending':
-                statusClass = 'bg-yellow-500/10 text-yellow-400';
+              case "pending":
+                statusClass = "bg-yellow-500/10 text-yellow-400";
                 break;
-              case 'declined':
-                statusClass = 'bg-red-500/10 text-red-400';
+              case "declined":
+                statusClass = "bg-red-500/10 text-red-400";
                 break;
               default:
-                statusClass = 'bg-slate-500/10 text-slate-400';
+                statusClass = "bg-slate-500/10 text-slate-400";
             }
 
             const row = `
               <tr>
                 <td class="py-3">
                   <div class="font-bold text-white">$${loan.amount.toLocaleString()}</div>
-                  <div class="text-xs text-slate-500">${new Date(loan.createdAt).toLocaleDateString()}</div>
+                  <div class="text-xs text-slate-500">${new Date(
+                    loan.createdAt
+                  ).toLocaleDateString()}</div>
                 </td>
                 <td class="py-3 text-right">
-                  <span class="px-2 py-1 rounded text-xs ${statusClass}">${loan.status}</span>
+                  <span class="px-2 py-1 rounded text-xs ${statusClass}">${
+              loan.status
+            }</span>
                 </td>
               </tr>
             `;
             historyBody.innerHTML += row;
           });
         } else {
-          historyBody.innerHTML = '<tr><td colspan="2" class="py-3 text-center text-red-500">Failed to load history.</td></tr>';
+          historyBody.innerHTML =
+            '<tr><td colspan="2" class="py-3 text-center text-red-500">Failed to load history.</td></tr>';
         }
       }
     </script>

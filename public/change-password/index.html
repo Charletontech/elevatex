@@ -12,6 +12,11 @@
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
+    />
     <script>
       tailwind.config = {
         theme: {
@@ -251,7 +256,11 @@
         btn.innerText = "Updating...";
         btn.disabled = true;
 
-        const { data, status } = await apiCall('/api/auth/reset-password', 'PUT', { token, newPassword });
+        const { data, status } = await apiCall(
+          "/api/auth/reset-password",
+          "PUT",
+          { token, newPassword }
+        );
 
         if (status === 200) {
           Ui.alert(
@@ -262,7 +271,11 @@
             window.location.href = "../login/";
           });
         } else {
-          Ui.alert("error", "Update Failed", data.message || "An unknown error occurred.");
+          Ui.alert(
+            "error",
+            "Update Failed",
+            data.message || "An unknown error occurred."
+          );
           btn.innerText = "Update Password";
           btn.disabled = false;
         }

@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Send Email | ElevateX Admin</title>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/coolalertjs@latest/dist/coolalert.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,6 +15,11 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.jpg"
+      type="image/x-icon"
     />
     <script>
       tailwind.config = {
@@ -341,57 +349,73 @@
         theme: "snow",
         modules: {
           toolbar: [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'link'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'color': [] }, { 'background': [] }],
-            ['clean']
-          ]
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "link"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ color: [] }, { background: [] }],
+            ["clean"],
+          ],
         },
         placeholder: "Compose your message here...",
       });
 
-      document.addEventListener('DOMContentLoaded', () => {
-        if(!isLoggedIn()){
-            window.location.href = '../login/';
-            return;
-        }
-
-        const logoutBtn = document.getElementById("logoutBtn");
-        if(logoutBtn) {
-            logoutBtn.addEventListener('click', e => {
-                e.preventDefault();
-                Ui.alert("question", "Admin Sign Out", "Securely logging out?").then(result => {
-                    if (result.isConfirmed) {
-                        logout();
-                    }
-                });
-            });
-        }
-      });
-
-      document.getElementById("emailForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const recipientEmail = document.getElementById('recipientEmailInput').value;
-        const subject = document.getElementById('subjectInput').value;
-        const message = quill.root.innerHTML;
-
-        if (quill.getText().trim().length === 0 || !recipientEmail || !subject) {
-          Ui.toast("error", "All fields are required.");
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!isLoggedIn()) {
+          window.location.href = "../login/";
           return;
         }
 
-        const btn = e.target.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.innerText = "Sending...";
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            Ui.alert(
+              "question",
+              "Admin Sign Out",
+              "Securely logging out?"
+            ).then((result) => {
+              if (result.isConfirmed) {
+                logout();
+              }
+            });
+          });
+        }
+      });
 
-        const { data, status } = await apiCall('/api/admin/send-email', 'POST', {
-            recipientEmail,
-            subject,
-            message
-        });
+      document
+        .getElementById("emailForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const recipientEmail = document.getElementById(
+            "recipientEmailInput"
+          ).value;
+          const subject = document.getElementById("subjectInput").value;
+          const message = quill.root.innerHTML;
 
-        if(status === 200) {
+          if (
+            quill.getText().trim().length === 0 ||
+            !recipientEmail ||
+            !subject
+          ) {
+            Ui.toast("error", "All fields are required.");
+            return;
+          }
+
+          const btn = e.target.querySelector('button[type="submit"]');
+          btn.disabled = true;
+          btn.innerText = "Sending...";
+
+          const { data, status } = await apiCall(
+            "/api/admin/send-email",
+            "POST",
+            {
+              recipientEmail,
+              subject,
+              message,
+            }
+          );
+
+          if (status === 200) {
             Ui.alert(
               "success",
               "Email Sent",
@@ -400,13 +424,17 @@
               e.target.reset();
               quill.setText("");
             });
-        } else {
-            Ui.alert("error", "Failed to Send", data.message || "An unknown error occurred.");
-        }
-        
-        btn.disabled = false;
-        btn.innerText = "Send Email";
-      });
+          } else {
+            Ui.alert(
+              "error",
+              "Failed to Send",
+              data.message || "An unknown error occurred."
+            );
+          }
+
+          btn.disabled = false;
+          btn.innerText = "Send Email";
+        });
     </script>
   </body>
 </html>

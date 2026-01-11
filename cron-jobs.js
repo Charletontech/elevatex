@@ -1,16 +1,52 @@
-const processMaturedInvestments = require('./scripts/process_investments');
-const sequelize = require('./config/database');
+require("dotenv").config();
 
-module.exports = async (req, res) => {
-  console.log('Cron job triggered: processing matured investments.');
+const fs = require("fs");
+const path = require("path");
+
+const processMaturedInvestments = require("./scripts/process_investments");
+const sequelize = require("./config/database");
+
+// Paths
+const LOCK_FILE = "/tmp/elevatex-investment-cron.lock";
+const LOG_FILE = path.join(__dirname, "cron.log");
+
+// Simple logger
+function log(message) {
+  const timestamp = new Date().toISOString();
+  fs.appendFileSync(LOG_FILE, `[${timestamp}] ${message}\n`);
+}
+
+(async () => {
+  // Prevent overlapping runs
+  if (fs.existsSync(LOCK_FILE)) {
+    log("Cron already running. Exiting.");
+    process.exit(0);
+  }
+
+  // Create lock file
+  fs.writeFileSync(LOCK_FILE, process.pid.toString());
+
+  log("Cron job started: processing matured investments.");
+
   try {
-    // Ensure database is connected before running the job
     await sequelize.authenticate();
     await processMaturedInvestments();
-    res.status(200).send('Cron job executed successfully.');
+    log("Cron job completed successfully.");
   } catch (error) {
-    console.error('Cron job failed to connect to database or run processing script:', error);
-    res.status(500).send('Cron job failed.');
-  }
-};
+    log(`Cron job failed: ${error.stack || error.message}`);
+  } finally {
+    try {
+      await sequelize.close();
+      log("Database connection closed.");
+    } catch (err) {
+      log(`Failed to close database connection: ${err.message}`);
+    }
 
+    // Remove lock file
+    if (fs.existsSync(LOCK_FILE)) {
+      fs.unlinkSync(LOCK_FILE);
+    }
+
+    process.exit(0);
+  }
+})();

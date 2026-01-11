@@ -60,20 +60,16 @@ const requestDeposit = async (req, res) => {
       userId: req.user.id,
       status: "pending", // Deposits always pending admin approval
     });
-    res
-      .status(201)
-      .json({
-        message: "Deposit request submitted successfully.",
-        transaction: newTransaction,
-      });
+    res.status(201).json({
+      message: "Deposit request submitted successfully.",
+      transaction: newTransaction,
+    });
   } catch (error) {
     console.error("Deposit request error:", error);
-    res
-      .status(500)
-      .json({
-        message:
-          "An error occurred while submitting your deposit request. Please try again.",
-      });
+    res.status(500).json({
+      message:
+        "An error occurred while submitting your deposit request. Please try again.",
+    });
   }
 };
 
@@ -107,20 +103,16 @@ const requestWithdrawal = async (req, res) => {
       status: "pending", // Withdrawals always pending admin approval
     });
 
-    res
-      .status(201)
-      .json({
-        message: "Withdrawal request submitted successfully.",
-        transaction: newTransaction,
-      });
+    res.status(201).json({
+      message: "Withdrawal request submitted successfully.",
+      transaction: newTransaction,
+    });
   } catch (error) {
     console.error("Withdrawal request error:", error);
-    res
-      .status(500)
-      .json({
-        message:
-          "An error occurred while submitting your withdrawal request. Please try again.",
-      });
+    res.status(500).json({
+      message:
+        "An error occurred while submitting your withdrawal request. Please try again.",
+    });
   }
 };
 

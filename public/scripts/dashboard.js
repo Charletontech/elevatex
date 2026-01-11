@@ -21,10 +21,16 @@ const updateDashboardUI = (user) => {
   );
 
   if (totalBalanceEl)
-    totalBalanceEl.textContent = `$${user.balance.toLocaleString()}`;
+    totalBalanceEl.textContent = `$${user.balance.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+    })}`;
 
-  // These are just placeholders, you would need to calculate total profit and active plans
-  if (totalProfitEl) totalProfitEl.textContent = "$0.00";
+  // Update real profits from user model
+  if (totalProfitEl)
+    totalProfitEl.textContent = `$${(user.profits || 0).toLocaleString(
+      undefined,
+      { minimumFractionDigits: 2 }
+    )}`;
   if (activePlansEl) activePlansEl.textContent = user.Investments.length;
 
   // Update active investments
@@ -60,6 +66,20 @@ const updateDashboardUI = (user) => {
         ".h-full.bg-gradient-to-r"
       );
       const daysRemainingEl = investmentEl.querySelector("p.text-right");
+
+      // If the cloned template doesn't have the expected structure,
+      // skip rendering this investment to avoid null property assignments.
+      if (
+        !planNameEl ||
+        !investedAmountEl ||
+        !statusEl ||
+        !startDateEl ||
+        !maturityDateEl ||
+        !progressBarEl ||
+        !daysRemainingEl
+      ) {
+        return; // continue to next investment
+      }
 
       const planLabel = investment.plan || investment.planName || "Plan";
       planNameEl.textContent = `${planLabel} Plan (Active)`;
